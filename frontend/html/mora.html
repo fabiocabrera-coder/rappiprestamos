@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla de Mora</title>
+    <link href="/frontend/css/mora.css" rel="stylesheet" />
+</head>
+<body>    
+
+    <div class="mora-container">
+        <h1>Préstamos en Mora</h1>
+    
+        <!-- Listado de Préstamos en Mora -->
+        <div class="loan-cards">
+          <div class="loan-card" data-monto="1000" data-dias="15">
+            <h2>Cliente: Juan Pérez</h2>
+            <p><strong>Monto Adeudado:</strong> S/ 1,000</p>
+            <p><strong>Días en Mora:</strong> 15 días</p>
+            <button class="pagar-btn">Registrar Pago</button>
+          </div>
+    
+          <div class="loan-card" data-monto="2500" data-dias="30">
+            <h2>Cliente: Ana Gómez</h2>
+            <p><strong>Monto Adeudado:</strong> S/ 2,500</p>
+            <p><strong>Días en Mora:</strong> 30 días</p>
+            <button class="pagar-btn">Registrar Pago</button>
+          </div>
+        </div>
+    
+        <!-- Formulario Emergente para Pago -->
+        <div id="payment-modal" class="modal hidden">
+          <div class="modal-content">
+            <h2>Registrar Pago con Mora</h2>
+            <form id="mora-form">
+              <div class="input-group">
+                <label for="monto-original">Monto Original</label>
+                <input type="number" id="monto-original" readonly>
+              </div>
+    
+              <div class="input-group">
+                <label for="dias-mora">Días en Mora</label>
+                <input type="number" id="dias-mora" readonly>
+              </div>
+    
+              <div class="input-group">
+                <label for="monto-mora">Mora Calculada (S/)</label>
+                <input type="number" id="monto-mora" readonly>
+              </div>
+    
+              <div class="input-group">
+                <label for="total-pago">Total a Pagar</label>
+                <input type="number" id="total-pago" readonly>
+              </div>
+    
+              <button type="submit">Registrar Pago</button>
+              <button type="button" id="close-modal">Cancelar</button>
+            </form>
+          </div>
+        </div>
+    
+        <p id="mensaje-pago" class="hidden">Pago registrado exitosamente por S/ <span id="total-pago-msg"></span>.</p>
+      </div>
+    
+      <script>
+        const pagarBtns = document.querySelectorAll('.pagar-btn');
+        const modal = document.getElementById('payment-modal');
+        const closeModal = document.getElementById('close-modal');
+    
+        pagarBtns.forEach(btn => {
+          btn.addEventListener('click', function() {
+            const monto = parseFloat(this.parentElement.dataset.monto);
+            const dias = parseInt(this.parentElement.dataset.dias);
+            
+            const mora = calcularMora(monto, dias);
+            const total = monto + mora;
+    
+            document.getElementById('monto-original').value = monto.toFixed(2);
+            document.getElementById('dias-mora').value = dias;
+            document.getElementById('monto-mora').value = mora.toFixed(2);
+            document.getElementById('total-pago').value = total.toFixed(2);
+    
+            modal.classList.remove('hidden');
+          });
+        });
+    
+        closeModal.addEventListener('click', () => {
+          modal.classList.add('hidden');
+        });
+    
+        document.getElementById('mora-form').addEventListener('submit', function(event) {
+          event.preventDefault();
+          const totalPago = document.getElementById('total-pago').value;
+    
+          alert(`Pago registrado por S/ ${totalPago}.`);
+          document.getElementById('total-pago-msg').textContent = totalPago;
+          document.getElementById('mensaje-pago').classList.remove('hidden');
+          modal.classList.add('hidden');
+        });
+    
+        function calcularMora(monto, dias) {
+          const tasaMoraDiaria = 0.01; // 1% diario
+          return monto * tasaMoraDiaria * dias;
+        }
+      </script>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla de Inicio Login</title>
+    <link href="/frontend/css/login.css" rel="stylesheet" />
+</head>
+<body>    
+
+    <div class="login-container">
+        <h2>Acceso Administrador</h2>
+    
+        <form id="login-form">
+          <div class="input-group">
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" name="email" placeholder="Ingresa tu correo" required>
+          </div>
+    
+          <div class="input-group">
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
+          </div>
+    
+          <button type="submit" class="login-btn">Iniciar sesión</button>
+    
+          <p class="forgot-password">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+          </p>
+    
+          <p id="error-message" class="error-message hidden">Credenciales incorrectas. Por favor, intenta de nuevo.</p>
+        </form>
+    
+      </div>
+
+      <script>
+        // Simulación de validación
+        const form = document.getElementById('login-form');
+        const errorMessage = document.getElementById('error-message');
+    
+        form.addEventListener('submit', function(event) {
+          event.preventDefault();
+    
+          const email = form.email.value;
+          const password = form.password.value;
+    
+          // Validación simulada
+          if (email === 'admin@example.com' && password === 'admin123') {
+            alert('Login exitoso');
+            window.location.href = 'dashboard.html'; // Redirigir a panel principal
+          } else {
+            errorMessage.classList.remove('hidden');
+          }
+        });
+      </script>
+
+</body>
+</html>

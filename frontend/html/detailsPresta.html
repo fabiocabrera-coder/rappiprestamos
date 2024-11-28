@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pantalla de Detalles de Préstamo</title>
+    <link href="/frontend/css/detailsPresta.css" rel="stylesheet" />
+</head>
+<body>    
+
+    <div class="details-container">
+        <h1>Detalles del Préstamo</h1>
+    
+        <!-- Datos del Cliente -->
+        <div class="client-info">
+          <p><strong>Nombre del Cliente:</strong> Juan Pérez</p>
+          <p><strong>Fecha de Inicio:</strong> 2024-01-01</p>
+          <p><strong>Fecha de Vencimiento:</strong> 2024-06-01</p>
+          <p><strong>Monto del Préstamo:</strong> S/ 10,000</p>
+          <p><strong>Estado del Préstamo:</strong> <span id="loan-status">Activo</span></p>
+          <p id="mora-warning" class="warning hidden">El cliente está en mora. Se ha acumulado una mora de S/ 200.</p>
+        </div>
+    
+        <!-- Cronograma de Pagos -->
+        <h2>Cronograma de Pagos</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Monto</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2024-02-01</td>
+              <td>S/ 2,000</td>
+              <td>Pagada</td>
+            </tr>
+            <tr>
+              <td>2024-03-01</td>
+              <td>S/ 2,000</td>
+              <td>Pendiente</td>
+            </tr>
+            <tr>
+              <td>2024-04-01</td>
+              <td>S/ 2,000</td>
+              <td>Pendiente</td>
+            </tr>
+          </tbody>
+        </table>
+    
+        <!-- Formulario de Pago -->
+        <h2>Registrar Pago</h2>
+        <form id="payment-form">
+          <div class="input-group">
+            <label for="monto-pago">Monto Pagado</label>
+            <input type="number" id="monto-pago" placeholder="Monto pagado" required>
+          </div>
+    
+          <div class="input-group">
+            <label for="tipo-comprobante">Tipo de Comprobante</label>
+            <select id="tipo-comprobante" required>
+              <option value="boleta">Boleta</option>
+              <option value="factura">Factura</option>
+            </select>
+          </div>
+    
+          <button type="submit">Registrar Pago</button>
+        </form>
+    
+        <p id="comprobante-msg" class="hidden">Pago registrado con éxito. Se ha generado un <span id="comprobante-tipo"></span>.</p>
+      </div>
+    
+      <script>
+        // Simulación de validación y cálculo de mora
+        const loanStatus = document.getElementById('loan-status');
+        const moraWarning = document.getElementById('mora-warning');
+        const today = new Date();
+        const dueDate = new Date('2024-03-01'); // Fecha de pago pendiente
+    
+        if (today > dueDate) {
+          loanStatus.textContent = 'En Mora';
+          moraWarning.classList.remove('hidden');
+        }
+    
+        // Registro de pagos
+        document.getElementById('payment-form').addEventListener('submit', function(event) {
+          event.preventDefault();
+          const montoPago = document.getElementById('monto-pago').value;
+          const tipoComprobante = document.getElementById('tipo-comprobante').value;
+    
+          if (montoPago <= 0) {
+            alert('El monto debe ser mayor a cero.');
+            return;
+          }
+    
+          alert(`Pago de S/ ${montoPago} registrado.`);
+          document.getElementById('comprobante-tipo').textContent = tipoComprobante;
+          document.getElementById('comprobante-msg').classList.remove('hidden');
+        });
+      </script>
+
+</body>
+</html>
