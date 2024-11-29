@@ -8,9 +8,9 @@ const obtenerDatosCliente = async (documento, tipo) => {
 
     // Construimos la URL dependiendo si es un DNI o RUC
     if (tipo === 'DNI') {
-        apiUrl = `https://apis.net.pe/reniec/dni/${documento}?token=${token}`;
+        apiUrl = `https://api.apis.net.pe/v2/reniec/dni?numero=${documento}`;
     } else if (tipo === 'RUC') {
-        apiUrl = `https://apis.net.pe/sunat/ruc/${documento}?token=${token}`;
+        apiUrl = `https://api.apis.net.pe/v2/sunat/ruc/full?numero=${documento}`;
     }
 
     try {
