@@ -1,38 +1,23 @@
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = require('../config/database');
+const db = require('../config/database');
 
-const Cliente = sequelize.define('Cliente', {
-    dni: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-    RUC: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-    nombre: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    direccion: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    telefono: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    correo: {
-        type: DataTypes.STRING,
-        allowNull: false,
-        unique: true,
-    },
-    fechaNacimiento: {
-        type: DataTypes.DATE,
-        allowNull: false,
-    },
-});
+// Función para registrar un cliente
+const registrarCliente = async (cliente) => {
+    const { dni_ruc, nombre, direccion, telefono, correo, fecha_nacimiento } = cliente;
+    const query = `
+        INSERT INTO clientes (dni_ruc, nombre, direccion, telefono, correo, fecha_nacimiento)
+        VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;
+    `;
+    const values = [dni_ruc, nombre, direccion, telefono, correo, fecha_nacimiento];
 
-module.exports = { Cliente };
+    try {
+        const res = await db.query(query, values);
+        return res.rows[0].id; // Retorna el ID del nuevo cliente registrado
+    } catch (error) {
+        console.error('Error al registrar cliente:', error);
+        throw new Error('Error al registrar cliente');
+    }
+};
+
+module.exports = {
+    registrarCliente,
+};
