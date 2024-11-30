@@ -1,23 +1,19 @@
-// Importar las dependencias necesarias
-import express from 'express';  // Importar Express
-import cors from 'cors';         // Si estás usando CORS
+import express from 'express';  // Usar import para cargar express
+import clienteRoutes from './routes/clienteRoutes.js';  // Asegúrate de tener la extensión '.js'
+import cors from 'cors';
 
-// Crear una instancia de la aplicación Express
 const app = express();
+const port = 3000;
 
-// Configuración de middlewares
-app.use(cors());               // Habilitar CORS
-app.use(express.json());       // Permite que el servidor entienda JSON en las peticiones
+// Middleware
+app.use(cors());
+app.use(express.json()); // Para parsear las solicitudes con JSON
 
-// Definir una ruta básica para probar
-app.get('/', (req, res) => {
-  res.send('¡Hola, mundo!');    // Responde con un mensaje básico
+// Rutas
+app.use('/api/clientes', clienteRoutes);
+
+// Iniciar servidor
+app.listen(port, () => {
+  console.log(`Servidor en ejecución en http://localhost:${port}`);
 });
 
-// Configurar el puerto donde corre el servidor
-const PORT = process.env.PORT || 3000;  // Si no hay una variable de entorno, usa el puerto 3000
-
-// Arrancar el servidor
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en el puerto ${PORT}`);
-});
