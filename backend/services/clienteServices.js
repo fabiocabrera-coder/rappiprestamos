@@ -43,7 +43,7 @@ export const registrarClienteService = async ({ tipoCliente, correo, telefono, d
 
   try {
     // Primero creamos el cliente base en la base de datos
-    cliente = await Cliente.create({ correo, telefono });
+    cliente = await Cliente.create({ correo, telefono, tipoCliente });
 
     // Si es una persona natural, buscamos la información en RENIEC
     if (tipoCliente === 'personaNatural') {

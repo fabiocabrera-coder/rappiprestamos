@@ -3,11 +3,11 @@ import client from '../config/database.js';  // Importación con la exportación
 // Definimos las funciones para interactuar con la base de datos
 
 // Función para crear un nuevo cliente
-export const registrarCliente = async ({ correo, telefono }) => {
+export const registrarCliente = async ({ correo, telefono, tipoCliente }) => {
   const query = `
-    INSERT INTO cliente (correo, telefono)
-    VALUES ($1, $2)
-    RETURNING id, correo, telefono;
+    INSERT INTO cliente (correo, telefono, tipo_cliente)
+    VALUES ($1, $2, $3)
+    RETURNING id, correo, telefono, tipo_Cliente;
   `;
   const values = [correo, telefono];
 
