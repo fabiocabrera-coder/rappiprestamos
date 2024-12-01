@@ -1,7 +1,6 @@
-import axios from 'axios';
-import { Cliente, PersonaNatural, PersonaJuridica } from '../models/cliente'; // Reemplaza con tus modelos de Sequelize o tus modelos de PostgreSQL
+import axios from 'axios'; // Reemplaza con tus modelos de Sequelize o tus modelos de PostgreSQL
+import { registrarCliente } from '../models/cliente.js';// URL base de las APIs
 
-// URL base de las APIs
 const RENIEC_URL = 'https://api.apis.net.pe/v2/reniec/dni?numero=';
 const SUNAT_URL = 'https://api.apis.net.pe/v2/sunat/ruc?numero=';
 
@@ -37,7 +36,7 @@ export const consultarRuc = async (ruc) => {
 };
 
 // Registrar un cliente con su correspondiente información
-export const registrarCliente = async (datosCliente) => {
+export const registrarNuevoCliente = async (datosCliente) => {
   const { tipoCliente, correo, telefono, documento } = datosCliente;
 
   let cliente = null;
