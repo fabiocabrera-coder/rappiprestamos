@@ -1,34 +1,30 @@
-import express from 'express';
-const router = express.Router();
+import { consultarDni, consultarRuc, registrarCliente } from '../services/clienteServices.js';
 
-// Ruta para consultar el DNI
-router.get('/consulta/dni/:numero', async (req, res) => {
+// Controlador para consultar el DNI
+export const consultarDniController = async (req, res) => {
   const { numero } = req.params;
-
   try {
     const data = await consultarDni(numero);
     res.json(data);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+};
 
-// Ruta para consultar el RUC
-router.get('/consulta/ruc/:numero', async (req, res) => {
+// Controlador para consultar el RUC
+export const consultarRucController = async (req, res) => {
   const { numero } = req.params;
-
   try {
     const data = await consultarRuc(numero);
     res.json(data);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
+};
 
-// Ruta para registrar un cliente (persona natural o jurídica)
-router.post('/registrar', async (req, res) => {
+// Controlador para registrar un cliente
+export const registrarClienteController = async (req, res) => {
   const { tipoCliente, correo, telefono, documento } = req.body;
-
   try {
     const { cliente, persona } = await registrarCliente({
       tipoCliente,
@@ -40,10 +36,7 @@ router.post('/registrar', async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
-});
-
-// Exportación usando `export { router }` en lugar de `export default router;`
-export { router };
+};
 
 
 
