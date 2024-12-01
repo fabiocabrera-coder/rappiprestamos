@@ -1,6 +1,8 @@
-import axios from 'axios'; // Reemplaza con tus modelos de Sequelize o tus modelos de PostgreSQL
-import { registrarCliente } from '../models/cliente.js';// URL base de las APIs
+import axios from 'axios';  // Usamos axios para hacer las peticiones a las APIs externas
+import { registrarCliente as registrarClienteModelo } from '../models/cliente.js';  // Importar la función de registrar cliente desde el modelo
+import { Cliente, PersonaNatural, PersonaJuridica } from '../models/cliente.js'; // Asegúrate de que tus modelos estén bien definidos
 
+// URL base de las APIs
 const RENIEC_URL = 'https://api.apis.net.pe/v2/reniec/dni?numero=';
 const SUNAT_URL = 'https://api.apis.net.pe/v2/sunat/ruc?numero=';
 
@@ -36,21 +38,21 @@ export const consultarRuc = async (ruc) => {
 };
 
 // Registrar un cliente con su correspondiente información
-export const registrarNuevoCliente = async (datosCliente) => {
+export const registrarCliente = async (datosCliente) => {
   const { tipoCliente, correo, telefono, documento } = datosCliente;
 
   let cliente = null;
   let persona = null;
 
   try {
-    // Primero creamos el cliente base
+    // Primero creamos el cliente base en la base de datos
     cliente = await Cliente.create({
       correo,
       telefono
     });
 
     if (tipoCliente === 'personaNatural') {
-      // Consulta los datos del DNI
+      // Si es persona natural, consultamos los datos del DNI
       const dniData = await consultarDni(documento);
       persona = await PersonaNatural.create({
         cliente_id: cliente.id,
@@ -58,7 +60,7 @@ export const registrarNuevoCliente = async (datosCliente) => {
         dni: dniData.numeroDocumento
       });
     } else if (tipoCliente === 'personaJuridica') {
-      // Consulta los datos del RUC
+      // Si es persona jurídica, consultamos los datos del RUC
       const rucData = await consultarRuc(documento);
       persona = await PersonaJuridica.create({
         cliente_id: cliente.id,
@@ -84,4 +86,5 @@ export const registrarNuevoCliente = async (datosCliente) => {
     throw new Error('Error al registrar el cliente: ' + error.message);
   }
 };
+
 

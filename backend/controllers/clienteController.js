@@ -1,4 +1,4 @@
-import { consultarDni, consultarRuc, registrarCliente } from '../services/clienteServices.js';
+import { consultarDni, consultarRuc, registrarNuevoCliente } from '../services/clienteServices.js';
 
 // Controlador para consultar el DNI
 export const consultarDniController = async (req, res) => {
@@ -37,8 +37,13 @@ export const consultarRucController = async (req, res) => {
 // Controlador para registrar un cliente
 export const registrarClienteController = async (req, res) => {
   const { tipoCliente, correo, telefono, documento } = req.body;
+
+  if (!tipoCliente || !correo || !telefono || !documento) {
+    return res.status(400).json({ error: 'Todos los campos son requeridos' });
+  }
+
   try {
-    const { cliente, persona } = await registrarCliente({
+    const { cliente, persona } = await registrarNuevoCliente({
       tipoCliente,
       correo,
       telefono,
@@ -49,6 +54,7 @@ export const registrarClienteController = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 
 
 
