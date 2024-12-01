@@ -3,22 +3,34 @@ import { consultarDni, consultarRuc, registrarCliente } from '../services/client
 // Controlador para consultar el DNI
 export const consultarDniController = async (req, res) => {
   const { numero } = req.params;
+  if (!numero || numero.length < 8) {
+    return res.status(400).json({ error: 'El número de DNI es inválido' });
+  }
   try {
     const data = await consultarDni(numero);
+    if (!data) {
+      return res.status(404).json({ error: 'No se encontró información para este DNI' });
+    }
     res.json(data);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'Error al consultar el DNI: ' + error.message });
   }
 };
 
 // Controlador para consultar el RUC
 export const consultarRucController = async (req, res) => {
   const { numero } = req.params;
+  if (!numero || numero.length < 11) {
+    return res.status(400).json({ error: 'El número de RUC es inválido' });
+  }
   try {
     const data = await consultarRuc(numero);
+    if (!data) {
+      return res.status(404).json({ error: 'No se encontró información para este RUC' });
+    }
     res.json(data);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    res.status(500).json({ error: 'Error al consultar el RUC: ' + error.message });
   }
 };
 
