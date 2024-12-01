@@ -1,9 +1,9 @@
-import client from '../config/database.js';  // Importamos la conexión de la base de datos
+import client from '../config/database.js';  // Importación con la exportación nombrada
 
 // Definimos las funciones para interactuar con la base de datos
 
 // Función para crear un nuevo cliente
-export const crearCliente = async ({ correo, telefono }) => {
+export const registrarCliente = async ({ correo, telefono }) => {
   const query = `
     INSERT INTO cliente (correo, telefono)
     VALUES ($1, $2)
@@ -107,7 +107,7 @@ export const obtenerClientePorDocumento = async (documento) => {
 
 // Modelo Cliente (función de creación base)
 export const Cliente = {
-  create: crearCliente
+  create: registrarCliente
 };
 
 // Modelo Persona Natural
@@ -119,5 +119,6 @@ export const PersonaNatural = {
 export const PersonaJuridica = {
   create: crearPersonaJuridica
 };
+
 
 

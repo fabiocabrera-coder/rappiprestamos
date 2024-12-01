@@ -1,4 +1,4 @@
-import { consultarDni, consultarRuc, registrarNuevoCliente } from '../services/clienteServices.js';
+import { consultarDni, consultarRuc, registrarClienteService } from '../services/clienteServices.js';
 
 // Controlador para consultar el DNI
 export const consultarDniController = async (req, res) => {
@@ -43,7 +43,7 @@ export const registrarClienteController = async (req, res) => {
   }
 
   try {
-    const { cliente, persona } = await registrarNuevoCliente({
+    const { cliente, persona } = await registrarClienteService({
       tipoCliente,
       correo,
       telefono,

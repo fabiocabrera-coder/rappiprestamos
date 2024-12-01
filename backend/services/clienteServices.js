@@ -1,6 +1,5 @@
 import axios from 'axios';  // Usamos axios para hacer las peticiones a las APIs externas
-import { registrarCliente as registrarClienteModelo } from '../models/cliente.js';  // Importar la función de registrar cliente desde el modelo
-import { Cliente, PersonaNatural, PersonaJuridica } from '../models/cliente.js'; // Asegúrate de que tus modelos estén bien definidos
+import { Cliente, PersonaNatural, PersonaJuridica } from '../models/cliente.js'; // Importamos los modelos
 
 // URL base de las APIs
 const RENIEC_URL = 'https://api.apis.net.pe/v2/reniec/dni?numero=';
@@ -37,35 +36,31 @@ export const consultarRuc = async (ruc) => {
   }
 };
 
-// Registrar un cliente con su correspondiente información
-export const registrarCliente = async (datosCliente) => {
-  const { tipoCliente, correo, telefono, documento } = datosCliente;
-
+// Función para registrar un nuevo cliente (persona natural o jurídica)
+export const registrarClienteService = async ({ tipoCliente, correo, telefono, documento }) => {
   let cliente = null;
   let persona = null;
 
   try {
     // Primero creamos el cliente base en la base de datos
-    cliente = await Cliente.create({
-      correo,
-      telefono
-    });
+    cliente = await Cliente.create({ correo, telefono });
 
+    // Si es una persona natural, buscamos la información en RENIEC
     if (tipoCliente === 'personaNatural') {
-      // Si es persona natural, consultamos los datos del DNI
-      const dniData = await consultarDni(documento);
+      const dniData = await consultarDni(documento); // Consultamos los datos del DNI
       persona = await PersonaNatural.create({
         cliente_id: cliente.id,
         nombre: dniData.nombres + ' ' + dniData.apellidoPaterno + ' ' + dniData.apellidoMaterno,
         dni: dniData.numeroDocumento
       });
-    } else if (tipoCliente === 'personaJuridica') {
-      // Si es persona jurídica, consultamos los datos del RUC
-      const rucData = await consultarRuc(documento);
+    } 
+    // Si es una persona jurídica, buscamos la información en SUNAT
+    else if (tipoCliente === 'personaJuridica') {
+      const rucData = await consultarRuc(documento); // Consultamos los datos del RUC
       persona = await PersonaJuridica.create({
         cliente_id: cliente.id,
         razon_social: rucData.nombre,
-        numero_documento: rucData.numeroDocumento,
+        ruc: rucData.numeroDocumento,
         estado: rucData.estado,
         condicion: rucData.condicion,
         direccion: rucData.direccion,
@@ -81,6 +76,7 @@ export const registrarCliente = async (datosCliente) => {
       });
     }
 
+    // Retornamos el cliente y la persona (natural o jurídica) creados
     return { cliente, persona };
   } catch (error) {
     throw new Error('Error al registrar el cliente: ' + error.message);
