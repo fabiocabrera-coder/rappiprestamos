@@ -8,125 +8,125 @@
 </head>
 <body>    
 
-    <div class="admin-container">
-        <nav class="sidebar">
-          <h2>Menú</h2>
-          <ul>
-            <li><a href="#" data-section="clientes">Clientes</a></li>
-            <li><a href="#" data-section="prestamos">Préstamos</a></li>
-            <li><a href="#" data-section="pagos">Pagos</a></li>
-            <li><a href="#" data-section="informes">Informes</a></li>
-          </ul>
-        </nav>
-    
-        <main class="main-content">
-          <h1 id="section-title">Clientes</h1>
-    
-          <!-- Vista de Clientes -->
-          <section id="clientes" class="section active">
-            <table>
-              <thead>
-                <tr>
-                  <th>Nombre del Cliente</th>
-                  <th>Estado del Préstamo</th>
-                  <th>Monto del Préstamo</th>
-                  <th>Fecha de Inicio</th>
-                  <th>Fecha de Vencimiento</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Juan Pérez</td>
-                  <td>Activo</td>
-                  <td>$10,000</td>
-                  <td>2024-01-01</td>
-                  <td>2024-06-01</td>
-                  <td><button>Ver Detalles</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-    
-          <!-- Vista de Préstamos -->
-          <section id="prestamos" class="section">
-            <table>
-              <thead>
-                <tr>
-                  <th>Cliente Asociado</th>
-                  <th>Monto del Préstamo</th>
-                  <th>Plazo</th>
-                  <th>Estado del Préstamo</th>
-                  <th>Fecha de Inicio</th>
-                  <th>Fecha de Vencimiento</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Ana Gómez</td>
-                  <td>$5,000</td>
-                  <td>6 meses</td>
-                  <td>En Mora</td>
-                  <td>2023-07-01</td>
-                  <td>2023-12-31</td>
-                  <td><button>Ver y Pagar</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-    
-          <!-- Vista de Pagos -->
-          <section id="pagos" class="section">
-            <table>
-              <thead>
-                <tr>
-                  <th>Cliente Asociado</th>
-                  <th>Fecha de Pago</th>
-                  <th>Monto del Pago</th>
-                  <th>Estado del Pago</th>
-                  <th>Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Juan Pérez</td>
-                  <td>2024-03-01</td>
-                  <td>$1,000</td>
-                  <td>Completo</td>
-                  <td><button>Emitir Comprobante</button></td>
-                </tr>
-              </tbody>
-            </table>
-          </section>
-    
-          <!-- Vista de Informes -->
-          <section id="informes" class="section">
-            <h2>Informes en Construcción</h2>
-            <p>Sección reservada para futuros informes.</p>
-          </section>
-    
-        </main>
-      </div>
-   
-      <script>
-        // Navegación dinámica entre secciones
-        const links = document.querySelectorAll('.sidebar a');
-        const sections = document.querySelectorAll('.section');
-        const title = document.getElementById('section-title');
-    
-        links.forEach(link => {
-          link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const sectionId = link.dataset.section;
-    
-            sections.forEach(section => section.classList.remove('active'));
-            document.getElementById(sectionId).classList.add('active');
-    
-            title.textContent = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
-          });
-        });
-      </script>
+  <div class="admin-container">
+    <nav class="sidebar">
+      <h2>Menú</h2>
+      <ul>
+        <li><a href="#" data-section="clientes">Clientes</a></li>
+        <li><a href="#" data-section="prestamos">Préstamos</a></li>
+        <li><a href="#" data-section="pagos">Pagos</a></li>
+        <li><a href="#" data-section="informes">Informes</a></li>
+      </ul>
+    </nav>
+
+    <main class="main-content">
+      <h1 id="section-title">Clientes</h1>
+
+      <!-- Vista de Clientes -->
+      <section id="clientes" class="section active">
+        <table>
+          <thead>
+            <tr>
+              <th>Nombre del Cliente</th>
+              <th>Estado del Préstamo</th>
+              <th>Monto del Préstamo</th>
+              <th>Fecha de Inicio</th>
+              <th>Fecha de Vencimiento</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Juan Pérez</td>
+              <td>Activo</td>
+              <td>$10,000</td>
+              <td>2024-01-01</td>
+              <td>2024-06-01</td>
+              <td><button>Ver Detalles</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Vista de Préstamos -->
+      <section id="prestamos" class="section">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente Asociado</th>
+              <th>Monto del Préstamo</th>
+              <th>Plazo</th>
+              <th>Estado del Préstamo</th>
+              <th>Fecha de Inicio</th>
+              <th>Fecha de Vencimiento</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Ana Gómez</td>
+              <td>$5,000</td>
+              <td>6 meses</td>
+              <td>En Mora</td>
+              <td>2023-07-01</td>
+              <td>2023-12-31</td>
+              <td><button>Ver y Pagar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Vista de Pagos -->
+      <section id="pagos" class="section">
+        <table>
+          <thead>
+            <tr>
+              <th>Cliente Asociado</th>
+              <th>Fecha de Pago</th>
+              <th>Monto del Pago</th>
+              <th>Estado del Pago</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Juan Pérez</td>
+              <td>2024-03-01</td>
+              <td>$1,000</td>
+              <td>Completo</td>
+              <td><button>Emitir Comprobante</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- Vista de Informes -->
+      <section id="informes" class="section">
+        <h2>Informes en Construcción</h2>
+        <p>Sección reservada para futuros informes.</p>
+      </section>
+
+    </main>
+  </div>
+
+  <script>
+    // Navegación dinámica entre secciones
+    const links = document.querySelectorAll('.sidebar a');
+    const sections = document.querySelectorAll('.section');
+    const title = document.getElementById('section-title');
+
+    links.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const sectionId = link.dataset.section;
+
+        sections.forEach(section => section.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+
+        title.textContent = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+      });
+    });
+  </script>
 
 </body>
 </html>

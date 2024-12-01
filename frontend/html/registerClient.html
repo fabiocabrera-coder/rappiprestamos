@@ -8,100 +8,100 @@
 </head>
 <body>    
 
-    <div class="register-container">
-        <h1>Registro de Cliente</h1>
-    
-        <form id="register-form">
-          <div class="input-group">
-            <label for="dni-ruc">DNI o RUC</label>
-            <input type="text" id="dni-ruc" placeholder="Ingresa DNI o RUC" maxlength="11" required>
-            <button type="button" id="fetch-data">Buscar</button>
-          </div>
-    
-          <div class="input-group">
-            <label for="nombre">Nombre Completo</label>
-            <input type="text" id="nombre" placeholder="Nombre completo" readonly>
-          </div>
-    
-          <div class="input-group">
-            <label for="direccion">Dirección</label>
-            <input type="text" id="direccion" placeholder="Dirección" readonly>
-          </div>
-    
-          <div class="input-group">
-            <label for="telefono">Teléfono</label>
-            <input type="text" id="telefono" placeholder="Teléfono">
-          </div>
-    
-          <div class="input-group">
-            <label for="correo">Correo Electrónico</label>
-            <input type="email" id="correo" placeholder="Correo">
-          </div>
-    
-          <div class="input-group">
-            <label for="fecha-nacimiento">Fecha de Nacimiento</label>
-            <input type="date" id="fecha-nacimiento" required>
-            <p id="edad-warning" class="warning hidden">El cliente debe ser mayor de 18 años para solicitar un préstamo.</p>
-          </div>
-    
-          <div class="input-group">
-            <label for="monto-prestamo">Monto del Préstamo</label>
-            <input type="number" id="monto-prestamo" max="5000" placeholder="Monto (Máx. 5000 soles)" disabled>
-          </div>
-    
-          <div class="input-group">
-            <label for="plazo-prestamo">Plazo del Préstamo</label>
-            <select id="plazo-prestamo" disabled>
-              <option value="1">1 mes</option>
-              <option value="6">6 meses</option>
-            </select>
-          </div>
-    
-          <button type="submit" id="register-btn">Registrar Cliente</button>
-        </form>
-    
-        <p id="cronograma" class="hidden">Cronograma generado: <span id="detalle-cronograma"></span></p>
+  <div class="register-container">
+    <h1>Registro de Cliente</h1>
+
+    <form id="register-form">
+      <div class="input-group">
+        <label for="dni-ruc">DNI o RUC</label>
+        <input type="text" id="dni-ruc" placeholder="Ingresa DNI o RUC" maxlength="11" required>
+        <button type="button" id="fetch-data">Buscar</button>
       </div>
-    
-      <script>
-        // Simulación de búsqueda en RENIEC/SUNAT
-        document.getElementById('fetch-data').addEventListener('click', function() {
-          const dniRuc = document.getElementById('dni-ruc').value;
-          if (dniRuc.length === 8 || dniRuc.length === 11) {
-            document.getElementById('nombre').value = 'Cliente Simulado';
-            document.getElementById('direccion').value = 'Calle Falsa 123';
-          } else {
-            alert('Ingresa un DNI (8 dígitos) o RUC (11 dígitos) válido.');
-          }
-        });
-    
-        // Validación de edad
-        document.getElementById('fecha-nacimiento').addEventListener('change', function() {
-          const birthDate = new Date(this.value);
-          const today = new Date();
-          const age = today.getFullYear() - birthDate.getFullYear();
-          const is18orOlder = today >= new Date(birthDate.setFullYear(birthDate.getFullYear() + 18));
-    
-          if (!is18orOlder) {
-            document.getElementById('edad-warning').classList.remove('hidden');
-            document.getElementById('monto-prestamo').disabled = true;
-            document.getElementById('plazo-prestamo').disabled = true;
-          } else {
-            document.getElementById('edad-warning').classList.add('hidden');
-            document.getElementById('monto-prestamo').disabled = false;
-            document.getElementById('plazo-prestamo').disabled = false;
-          }
-        });
-    
-        // Registro del cliente y generación de cronograma
-        document.getElementById('register-form').addEventListener('submit', function(event) {
-          event.preventDefault();
-          alert('Cliente registrado exitosamente.');
-          const plazo = document.getElementById('plazo-prestamo').value;
-          document.getElementById('detalle-cronograma').innerText = `Pagos mensuales durante ${plazo} mes(es).`;
-          document.getElementById('cronograma').classList.remove('hidden');
-        });
-      </script>
+
+      <div class="input-group">
+        <label for="nombre">Nombre Completo</label>
+        <input type="text" id="nombre" placeholder="Nombre completo" readonly>
+      </div>
+
+      <div class="input-group">
+        <label for="direccion">Dirección</label>
+        <input type="text" id="direccion" placeholder="Dirección" readonly>
+      </div>
+
+      <div class="input-group">
+        <label for="telefono">Teléfono</label>
+        <input type="text" id="telefono" placeholder="Teléfono">
+      </div>
+
+      <div class="input-group">
+        <label for="correo">Correo Electrónico</label>
+        <input type="email" id="correo" placeholder="Correo">
+      </div>
+
+      <div class="input-group">
+        <label for="fecha-nacimiento">Fecha de Nacimiento</label>
+        <input type="date" id="fecha-nacimiento" required>
+        <p id="edad-warning" class="warning">El cliente debe ser mayor de 18 años para solicitar un préstamo.</p>
+      </div>
+
+      <div class="input-group">
+        <label for="monto-prestamo">Monto del Préstamo</label>
+        <input type="number" id="monto-prestamo" max="5000" placeholder="Monto (Máx. 5000 soles)" disabled>
+      </div>
+
+      <div class="input-group">
+        <label for="plazo-prestamo">Plazo del Préstamo</label>
+        <select id="plazo-prestamo" disabled>
+          <option value="1">1 mes</option>
+          <option value="6">6 meses</option>
+        </select>
+      </div>
+
+      <button type="submit" id="register-btn">Registrar Cliente</button>
+    </form>
+
+    <p id="cronograma" class="hidden">Cronograma generado: <span id="detalle-cronograma"></span></p>
+  </div>
+
+  <script>
+    // Simulación de búsqueda en RENIEC/SUNAT
+    document.getElementById('fetch-data').addEventListener('click', function() {
+      const dniRuc = document.getElementById('dni-ruc').value;
+      if (dniRuc.length === 8 || dniRuc.length === 11) {
+        document.getElementById('nombre').value = 'Cliente Simulado';
+        document.getElementById('direccion').value = 'Calle Falsa 123';
+      } else {
+        alert('Ingresa un DNI (8 dígitos) o RUC (11 dígitos) válido.');
+      }
+    });
+
+    // Validación de edad
+    document.getElementById('fecha-nacimiento').addEventListener('change', function() {
+      const birthDate = new Date(this.value);
+      const today = new Date();
+      const age = today.getFullYear() - birthDate.getFullYear();
+      const is18orOlder = today >= new Date(birthDate.setFullYear(birthDate.getFullYear() + 18));
+
+      if (!is18orOlder) {
+        document.getElementById('edad-warning').classList.add('show');
+        document.getElementById('monto-prestamo').disabled = true;
+        document.getElementById('plazo-prestamo').disabled = true;
+      } else {
+        document.getElementById('edad-warning').classList.remove('show');
+        document.getElementById('monto-prestamo').disabled = false;
+        document.getElementById('plazo-prestamo').disabled = false;
+      }
+    });
+
+    // Registro del cliente y generación de cronograma
+    document.getElementById('register-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      alert('Cliente registrado exitosamente.');
+      const plazo = document.getElementById('plazo-prestamo').value;
+      document.getElementById('detalle-cronograma').innerText = `Pagos mensuales durante ${plazo} mes(es).`;
+      document.getElementById('cronograma').classList.remove('hidden');
+    });
+  </script>
 
 </body>
 </html>

@@ -8,96 +8,96 @@
 </head>
 <body>    
 
-    <div class="payments-container">
-        <h1>Listado de Pagos</h1>
-    
-        <!-- Filtros de Búsqueda -->
-        <div class="filters">
-          <div class="input-group">
-            <label for="filtro-estado">Estado del Pago</label>
-            <select id="filtro-estado">
-              <option value="todos">Todos</option>
-              <option value="completo">Completado</option>
-              <option value="pendiente">Pendiente</option>
-              <option value="mora">En Mora</option>
-            </select>
-          </div>
-    
-          <div class="input-group">
-            <label for="filtro-cliente">Cliente / Préstamo</label>
-            <input type="text" id="filtro-cliente" placeholder="Buscar por cliente o préstamo">
-          </div>
-    
-          <button id="buscar-btn">Buscar</button>
-        </div>
-    
-        <!-- Tabla de Pagos -->
-        <table id="tabla-pagos">
-          <thead>
-            <tr>
-              <th>Cliente Asociado</th>
-              <th>Fecha de Pago</th>
-              <th>Monto Pagado</th>
-              <th>Tipo de Comprobante</th>
-              <th>Estado del Pago</th>
-              <th>Acción</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Juan Pérez</td>
-              <td>2024-03-01</td>
-              <td>S/ 1,000</td>
-              <td>Boleta</td>
-              <td>Completado</td>
-              <td><button class="comprobante-btn" data-comprobante="boleta">Generar Boleta</button></td>
-            </tr>
-            <tr>
-              <td>Ana Gómez</td>
-              <td>2024-04-01</td>
-              <td>S/ 2,000</td>
-              <td>Factura</td>
-              <td>Pendiente</td>
-              <td><button class="comprobante-btn" data-comprobante="factura">Generar Factura</button></td>
-            </tr>
-          </tbody>
-        </table>
-    
-        <p id="mensaje-comprobante" class="hidden">Se ha generado el comprobante: <span id="tipo-comprobante"></span>.</p>
+  <div class="payments-container">
+    <h1>Listado de Pagos</h1>
+
+    <!-- Filtros de Búsqueda -->
+    <div class="filters">
+      <div class="input-group">
+        <label for="filtro-estado">Estado del Pago</label>
+        <select id="filtro-estado">
+          <option value="todos">Todos</option>
+          <option value="completo">Completado</option>
+          <option value="pendiente">Pendiente</option>
+          <option value="mora">En Mora</option>
+        </select>
       </div>
-    
-      <script>
-        // Filtro de pagos
-        document.getElementById('buscar-btn').addEventListener('click', function() {
-          const estadoFiltro = document.getElementById('filtro-estado').value.toLowerCase();
-          const clienteFiltro = document.getElementById('filtro-cliente').value.toLowerCase();
-          const filas = document.querySelectorAll('#tabla-pagos tbody tr');
-    
-          filas.forEach(fila => {
-            const estado = fila.cells[4].textContent.toLowerCase();
-            const cliente = fila.cells[0].textContent.toLowerCase();
-    
-            if (
-              (estadoFiltro === 'todos' || estado.includes(estadoFiltro)) &&
-              (cliente.includes(clienteFiltro))
-            ) {
-              fila.style.display = '';
-            } else {
-              fila.style.display = 'none';
-            }
-          });
-        });
-    
-        // Generación de comprobantes
-        document.querySelectorAll('.comprobante-btn').forEach(btn => {
-          btn.addEventListener('click', function() {
-            const tipoComprobante = this.dataset.comprobante;
-            alert(`Generando ${tipoComprobante}`);
-            document.getElementById('tipo-comprobante').textContent = tipoComprobante;
-            document.getElementById('mensaje-comprobante').classList.remove('hidden');
-          });
-        });
-      </script>
+
+      <div class="input-group">
+        <label for="filtro-cliente">Cliente / Préstamo</label>
+        <input type="text" id="filtro-cliente" placeholder="Buscar por cliente o préstamo">
+      </div>
+
+      <button id="buscar-btn">Buscar</button>
+    </div>
+
+    <!-- Tabla de Pagos -->
+    <table id="tabla-pagos">
+      <thead>
+        <tr>
+          <th>Cliente Asociado</th>
+          <th>Fecha de Pago</th>
+          <th>Monto Pagado</th>
+          <th>Tipo de Comprobante</th>
+          <th>Estado del Pago</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Juan Pérez</td>
+          <td>2024-03-01</td>
+          <td>S/ 1,000</td>
+          <td>Boleta</td>
+          <td>Completado</td>
+          <td><button class="comprobante-btn" data-comprobante="boleta">Generar Boleta</button></td>
+        </tr>
+        <tr>
+          <td>Ana Gómez</td>
+          <td>2024-04-01</td>
+          <td>S/ 2,000</td>
+          <td>Factura</td>
+          <td>Pendiente</td>
+          <td><button class="comprobante-btn" data-comprobante="factura">Generar Factura</button></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p id="mensaje-comprobante" class="hidden">Se ha generado el comprobante: <span id="tipo-comprobante"></span>.</p>
+  </div>
+
+  <script>
+    // Filtro de pagos
+    document.getElementById('buscar-btn').addEventListener('click', function() {
+      const estadoFiltro = document.getElementById('filtro-estado').value.toLowerCase();
+      const clienteFiltro = document.getElementById('filtro-cliente').value.toLowerCase();
+      const filas = document.querySelectorAll('#tabla-pagos tbody tr');
+
+      filas.forEach(fila => {
+        const estado = fila.cells[4].textContent.toLowerCase();
+        const cliente = fila.cells[0].textContent.toLowerCase();
+
+        if (
+          (estadoFiltro === 'todos' || estado.includes(estadoFiltro)) &&
+          (cliente.includes(clienteFiltro))
+        ) {
+          fila.style.display = '';
+        } else {
+          fila.style.display = 'none';
+        }
+      });
+    });
+
+    // Generación de comprobantes
+    document.querySelectorAll('.comprobante-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const tipoComprobante = this.dataset.comprobante;
+        alert(`Generando ${tipoComprobante}`);
+        document.getElementById('tipo-comprobante').textContent = tipoComprobante;
+        document.getElementById('mensaje-comprobante').classList.remove('hidden');
+      });
+    });
+  </script>
 
 </body>
 </html>
