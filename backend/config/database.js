@@ -1,16 +1,17 @@
-const { Client } = require('pg');
+// config/database.js
+import pkg from 'pg';  // Importamos todo el paquete
+const { Client } = pkg;  // Desestructuramos para obtener Client
 
-// Crear la conexión a la base de datos PostgreSQL
 const client = new Client({
-    host: 'localhost', // Cambiar si tienes una configuración diferente
-    port: 5432,
-    user: 'tu_usuario',  // Tu usuario de PostgreSQL
-    password: 'tu_contraseña',  // Tu contraseña de PostgreSQL
-    database: 'nombre_de_tu_base_de_datos',
+  host: 'localhost', 
+  port: 5432,
+  user: 'postgres',  
+  password: 'admin123',  
+  database: 'postgres',
 });
 
 client.connect()
-    .then(() => console.log('Conectado a PostgreSQL'))
-    .catch((err) => console.error('Error de conexión:', err.stack));
+  .then(() => console.log('Conectado a PostgreSQL'))
+  .catch((err) => console.error('Error de conexión:', err.stack));
 
-module.exports = client;
+export { client };  // Exportación con nombre
