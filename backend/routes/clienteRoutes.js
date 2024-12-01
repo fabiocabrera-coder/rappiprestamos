@@ -13,4 +13,3 @@ router.get('/consulta/ruc/:numero', consultarRucController);
 router.post('/registrar', registrarClienteController);
 
 export { router };
-
