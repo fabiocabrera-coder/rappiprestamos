@@ -3,13 +3,13 @@ import client from '../config/database.js';  // Importación con la exportación
 // Definimos las funciones para interactuar con la base de datos
 
 // Función para crear un nuevo cliente
-export const registrarCliente = async ({ correo, telefono, tipoCliente }) => {
+export const registrarCliente = async ({ correo, telefono, tipoCliente, documento}) => {
   const query = `
-    INSERT INTO cliente (correo, telefono, tipo_cliente)
-    VALUES ($1, $2, $3)
-    RETURNING id, correo, telefono, tipo_Cliente;
+    INSERT INTO cliente (correo, telefono, tipo_cliente, documento)
+    VALUES ($1, $2, $3, $4)
+    RETURNING id, correo, telefono, tipo_cliente, documento;
   `;
-  const values = [correo, telefono];
+  const values = [correo, telefono, tipoCliente, documento];
 
   try {
     const res = await client.query(query, values);
@@ -21,6 +21,11 @@ export const registrarCliente = async ({ correo, telefono, tipoCliente }) => {
 
 // Función para crear una nueva persona natural
 export const crearPersonaNatural = async ({ cliente_id, nombre, dni }) => {
+    const clienteExistente = await obtenerClientePorCorreo(correo);
+  if (clienteExistente) {
+    throw new Error('El correo electrónico ya está registrado.');
+  }
+
   const query = `
     INSERT INTO personaNatural (cliente_id, nombre, dni)
     VALUES ($1, $2, $3)
@@ -105,9 +110,26 @@ export const obtenerClientePorDocumento = async (documento) => {
   }
 };
 
+// Función para verificar si el correo ya existe
+export const obtenerClientePorCorreo = async (correo) => {
+    const query = `
+      SELECT id FROM cliente WHERE correo = $1;
+    `;
+    const values = [correo];
+  
+    try {
+      const res = await client.query(query, values);
+      return res.rows[0]; // Retorna el cliente si existe
+    } catch (error) {
+      throw new Error('Error al verificar el correo: ' + error.message);
+    }
+  };
+  
+
 // Modelo Cliente (función de creación base)
 export const Cliente = {
-  create: registrarCliente
+  create: registrarCliente,
+  obtenerClientePorCorreo: obtenerClientePorCorreo
 };
 
 // Modelo Persona Natural

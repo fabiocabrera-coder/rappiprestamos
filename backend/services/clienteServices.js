@@ -37,17 +37,23 @@ export const consultarRuc = async (ruc) => {
 };
 
 // Función para registrar un nuevo cliente (persona natural o jurídica)
-export const registrarClienteService = async ({ tipoCliente, correo, telefono, documento }) => {
+export const registrarClienteService = async ({ correo, telefono, tipoCliente, documento }) => {
   let cliente = null;
   let persona = null;
 
   try {
+    const clienteExistente = await Cliente.obtenerClientePorCorreo(correo);
+    if (clienteExistente) {
+      throw new Error('El correo electrónico ya está registrado.');
+    }
+
     // Primero creamos el cliente base en la base de datos
-    cliente = await Cliente.create({ correo, telefono, tipoCliente });
+    cliente = await Cliente.create({ correo, telefono, tipoCliente, documento });
 
     // Si es una persona natural, buscamos la información en RENIEC
     if (tipoCliente === 'personaNatural') {
-      const dniData = await consultarDni(documento); // Consultamos los datos del DNI
+      const dniData = await consultarDni(documento);
+      console.log(dniData); // Consultamos los datos del DNI
       persona = await PersonaNatural.create({
         cliente_id: cliente.id,
         nombre: dniData.nombres + ' ' + dniData.apellidoPaterno + ' ' + dniData.apellidoMaterno,
@@ -56,7 +62,8 @@ export const registrarClienteService = async ({ tipoCliente, correo, telefono, d
     } 
     // Si es una persona jurídica, buscamos la información en SUNAT
     else if (tipoCliente === 'personaJuridica') {
-      const rucData = await consultarRuc(documento); // Consultamos los datos del RUC
+      const rucData = await consultarRuc(documento);
+      console.log('RUC data:', rucData); // Consultamos los datos del RUC
       persona = await PersonaJuridica.create({
         cliente_id: cliente.id,
         razon_social: rucData.nombre,
