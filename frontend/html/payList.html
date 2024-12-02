@@ -11,6 +11,7 @@
   <!-- Header -->
   <header>
     <h1>RappiPréstamos</h1>
+    <button id="home-btn" class="home-btn">Ir a la Página Principal</button>
   </header>
 
   <div class="payments-container">
@@ -139,6 +140,11 @@
         document.getElementById('mensaje-comprobante').classList.remove('hidden');
       });
     });
+    
+    //Volver a admin.html
+    document.getElementById('home-btn').addEventListener('click', function() {
+    window.location.href = 'admin.html';
+  });
   </script>
 </body>
 </html>

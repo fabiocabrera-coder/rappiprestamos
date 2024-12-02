@@ -28,7 +28,8 @@
         border-radius: 5px;
         font-size: 14px;
         cursor: pointer;
-        margin-left: auto;
+        margin-left: 20px; /* Cambiado de auto a 10px */
+        margin-right: 30px; /* Espaciado desde el borde derecho */
       }
 
       .logout-btn:hover {

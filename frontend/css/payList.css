@@ -34,6 +34,21 @@
     color: #fff;
   }
 
+  .home-btn {
+    background-color: #4CAF50; /* Verde */
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: 10px; /* Ajusta el margen si es necesario */
+  }
+  .home-btn:hover {
+    background-color: #45a049;
+  }
+  
   footer {
     position: fixed;
     bottom: 0;

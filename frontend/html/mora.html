@@ -11,6 +11,7 @@
   <!-- Header -->
   <header>
     <h1>RappiPréstamos</h1>
+    <button id="home-btn" class="home-btn">Ir a la Página Principal</button>
   </header>
 
   <div class="mora-container">
@@ -112,6 +113,11 @@
       const tasaMoraDiaria = 0.01; // 1% diario
       return monto * tasaMoraDiaria * dias;
     }
+
+    //volver a admin.html
+    document.getElementById('home-btn').addEventListener('click', function() {
+    window.location.href = 'admin.html';
+  });
   </script>
 
 </body>

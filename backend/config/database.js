@@ -3,10 +3,10 @@ import pkg from 'pg';  // Importamos todo el paquete
 const { Client } = pkg;  // Desestructuramos para obtener Client
 
 const client = new Client({
-  host: 'localhost', 
-  port: 5432,
+  host: 'junction.proxy.rlwy.net', 
+  port: 40196,
   user: 'postgres',  
-  password: 'admin123',  
+  password: 'btjTpQdTbPWrqzlBJEJMGSdWAThOFSYQ',  
   database: 'postgres',
 });
 
