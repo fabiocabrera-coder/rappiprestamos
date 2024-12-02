@@ -20,18 +20,14 @@ export const registrarCliente = async ({ correo, telefono, tipoCliente, document
 };
 
 // Función para crear una nueva persona natural
-export const crearPersonaNatural = async ({ cliente_id, nombre, dni }) => {
-    const clienteExistente = await obtenerClientePorCorreo(correo);
-  if (clienteExistente) {
-    throw new Error('El correo electrónico ya está registrado.');
-  }
+export const crearPersonaNatural = async ({ cliente_id, nombres, dni, apellidopaterno, apellidomaterno, tipodocumento, digitoverificador }) => {
 
   const query = `
-    INSERT INTO personaNatural (cliente_id, nombre, dni)
-    VALUES ($1, $2, $3)
-    RETURNING cliente_id, nombre, dni;
+    INSERT INTO personanatural ( cliente_id, nombres, dni, apellidopaterno, apellidomaterno, tipodocumento, digitoverificador)
+    VALUES ($1, $2, $3, $4, $5, $6, $7)
+    RETURNING cliente_id, nombres, dni, apellidopaterno, apellidomaterno, tipodocumento, digitoverificador;
   `;
-  const values = [cliente_id, nombre, dni];
+  const values = [ cliente_id, nombres, dni, apellidopaterno, apellidomaterno, tipodocumento, digitoverificador ];
 
   try {
     const res = await client.query(query, values);
@@ -43,26 +39,38 @@ export const crearPersonaNatural = async ({ cliente_id, nombre, dni }) => {
 
 // Función para crear una nueva persona jurídica
 export const crearPersonaJuridica = async ({
-  cliente_id,
-  razon_social,
-  ruc,
-  estado,
-  condicion,
-  direccion,
-  ubigeo,
-  via_tipo,
-  via_nombre,
-  zona_codigo,
-  zona_tipo,
-  numero,
-  distrito,
-  provincia,
-  departamento
+    cliente_id,
+    razon_social,
+    ruc,
+    estado,
+    condicion,
+    direccion,
+    ubigeo,
+    via_tipo,
+    via_nombre,
+    zona_codigo,
+    zona_tipo,
+    numero,
+    interior,
+    lote,
+    dpto,
+    manzana,
+    kilometro,
+    distrito,
+    provincia,
+    departamento,
+    esagenteretencion,
+    tipo,
+    actividadeconomica,
+    numerotrabajadores,
+    tipofacturacion,
+    tipocontabilidad,
+    comercioexterior
 }) => {
   const query = `
-    INSERT INTO personaJuridica (cliente_id, razon_social, ruc, estado, condicion, direccion, ubigeo, via_tipo, via_nombre, 
-    zona_codigo, zona_tipo, numero, distrito, provincia, departamento)
-    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)
+    INSERT INTO personajuridica (cliente_id, razon_social, ruc, estado, condicion, direccion, ubigeo, via_tipo, via_nombre, 
+    zona_codigo, zona_tipo, numero, interior, lote, dpto, manzana, kilometro, distrito, provincia, departamento, esagenteretencion, tipo, actividadeconomica, numerotrabajadores, tipofacturacion, tipocontabilidad, comercioexterior)
+    VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27)
     RETURNING cliente_id, razon_social, ruc;
   `;
   const values = [
@@ -78,9 +86,21 @@ export const crearPersonaJuridica = async ({
     zona_codigo,
     zona_tipo,
     numero,
+    interior,
+    lote,
+    dpto,
+    manzana,
+    kilometro,
     distrito,
     provincia,
-    departamento
+    departamento,
+    esagenteretencion,
+    tipo,
+    actividadeconomica,
+    numerotrabajadores,
+    tipofacturacion,
+    tipocontabilidad,
+    comercioexterior
   ];
 
   try {

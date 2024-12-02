@@ -16,5 +16,3 @@ app.use('/api/clientes', clienteRoutes);  // Ahora clienteRoutes ya debería fun
 app.listen(port, () => {
   console.log(`Servidor en ejecución en http://localhost:${port}`);
 });
-
-

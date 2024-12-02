@@ -3,7 +3,7 @@ import { Cliente, PersonaNatural, PersonaJuridica } from '../models/cliente.js';
 
 // URL base de las APIs
 const RENIEC_URL = 'https://api.apis.net.pe/v2/reniec/dni?numero=';
-const SUNAT_URL = 'https://api.apis.net.pe/v2/sunat/ruc?numero=';
+const SUNAT_URL = 'https://api.apis.net.pe/v2/sunat/ruc/full?numero=';
 
 // Token de la API
 const TOKEN = 'apis-token-11872.PHNNhm3YVQjGEsDDjeV4RszxGR1Bz5qE';
@@ -38,35 +38,45 @@ export const consultarRuc = async (ruc) => {
 
 // Función para registrar un nuevo cliente (persona natural o jurídica)
 export const registrarClienteService = async ({ correo, telefono, tipoCliente, documento }) => {
+  console.log('Datos recibidos:', { correo, telefono, tipoCliente, documento });
+
   let cliente = null;
   let persona = null;
 
   try {
+    // Verificamos si el correo ya está registrado
     const clienteExistente = await Cliente.obtenerClientePorCorreo(correo);
     if (clienteExistente) {
       throw new Error('El correo electrónico ya está registrado.');
     }
 
-    // Primero creamos el cliente base en la base de datos
+    // Creamos el cliente
     cliente = await Cliente.create({ correo, telefono, tipoCliente, documento });
+    console.log('Cliente creado:', cliente);
 
-    // Si es una persona natural, buscamos la información en RENIEC
+    // Si es una persona natural
     if (tipoCliente === 'personaNatural') {
-      const dniData = await consultarDni(documento);
-      console.log(dniData); // Consultamos los datos del DNI
+      const dniData = await consultarDni(documento); // Consultamos los datos del DNI
+      console.log('DNI Data:', dniData);  // Asegúrate de que los datos sean correctos
+      
       persona = await PersonaNatural.create({
         cliente_id: cliente.id,
-        nombre: dniData.nombres + ' ' + dniData.apellidoPaterno + ' ' + dniData.apellidoMaterno,
-        dni: dniData.numeroDocumento
+        nombres: dniData.nombres,
+        apellidopaterno: dniData.apellidoPaterno,
+        apellidomaterno: dniData.apellidoMaterno,
+        dni: dniData.numeroDocumento,
+        tipodocumento: dniData.tipoDocumento,
+        digitoverificador: dniData.digitoVerificador
       });
+      console.log('Peronsa natural creada:', persona);
     } 
-    // Si es una persona jurídica, buscamos la información en SUNAT
+    // Si es una persona jurídica
     else if (tipoCliente === 'personaJuridica') {
-      const rucData = await consultarRuc(documento);
-      console.log('RUC data:', rucData); // Consultamos los datos del RUC
+      const rucData = await consultarRuc(documento); // Consultamos los datos del RUC
+      console.log('RUC Data:', rucData);  // Asegúrate de que los datos sean correctos
       persona = await PersonaJuridica.create({
         cliente_id: cliente.id,
-        razon_social: rucData.nombre,
+        razon_social: rucData.razonSocial,
         ruc: rucData.numeroDocumento,
         estado: rucData.estado,
         condicion: rucData.condicion,
@@ -77,9 +87,21 @@ export const registrarClienteService = async ({ correo, telefono, tipoCliente, d
         zona_codigo: rucData.zonaCodigo,
         zona_tipo: rucData.zonaTipo,
         numero: rucData.numero,
+        interior: rucData.interior,
+        lote: rucData.lote,
+        dpto: rucData.dpto,
+        manzana: rucData.manzana,
+        kilometro: rucData.kilometro,
         distrito: rucData.distrito,
         provincia: rucData.provincia,
-        departamento: rucData.departamento
+        departamento: rucData.departamento,
+        esagenteretencion: rucData.EsAgenteRetencion,
+        tipo: rucData.tipo,
+        actividadeconomica: rucData.actividadEconomica,
+        numerotrabajadores: rucData.numeroTrabajadores,
+        tipofacturacion: rucData.tipoFacturacion,
+        tipocontabilidad: rucData.tipoContabilidad,
+        comercioexterior: rucData.comercioExterior
       });
     }
 
