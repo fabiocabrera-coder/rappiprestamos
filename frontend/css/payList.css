@@ -1,173 +1,178 @@
-/* General */
-body {
-  font-family: 'Roboto', sans-serif;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: center; /* Centrado horizontal */
-  align-items: center; /* Centrado vertical */
-  height: 100vh; /* Esto asegura que el body ocupe toda la altura de la ventana */
-  background: linear-gradient(135deg, #eef2f3, #dfe7ef);
-  color: #2c3e50;
-}
-
-.payments-container {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
-  width: 100%;
-  text-align: center;
-  animation: fadeIn 0.5s ease;
-  /* Eliminado cualquier margen que pueda estar desplazando el contenedor */
-}
-
-/* Title */
-h1 {
-  margin-bottom: 1.5rem;
-  color: #34495e;
-  font-size: 2rem;
-  border-bottom: 2px solid #3498db;
-  display: inline-block;
-  padding-bottom: 10px;
-}
-
-/* Filtros */
-.filters {
-  display: flex;
-  gap: 1rem;
-  margin-bottom: 1.5rem;
-  align-items: flex-end;
-}
-
-.input-group {
-  flex: 1;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #555;
-}
-
-input, select {
-  width: 100%;
-  padding: 10px 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-  background: #f9f9f9;
-  transition: border 0.3s, box-shadow 0.3s;
-}
-
-input:focus, select:focus {
-  border-color: #3498db;
-  outline: none;
-  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
-}
-
-button {
-  padding: 10px 15px;
-  background-color: #1abc9c;
-  color: #ffffff;
-  font-size: 1rem;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.2s;
-}
-
-button:hover {
-  background-color: #16a085;
-  transform: translateY(-2px);
-}
-
-/* Table */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1.5rem;
-  background: #f9f9f9;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-}
-
-table th, table td {
-  padding: 15px;
-  text-align: left;
-  font-size: 1rem;
-  border-bottom: 1px solid #ddd;
-}
-
-table th {
-  background: #34495e;
-  color: #ffffff;
-}
-
-table tr:hover {
-  background: #eaf3fa;
-}
-
-table tr:last-child td {
-  border-bottom: none;
-}
-
-/* Mensaje de comprobantes */
-#mensaje-comprobante {
-  color: #1abc9c;
-  font-size: 1.2rem;
-  font-weight: bold;
-  margin-top: 20px;
-}
-
-.hidden {
-  display: none;
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-      opacity: 0;
-      transform: translateY(-10px);
+  /* General */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
   }
-  to {
-      opacity: 1;
-      transform: translateY(0);
+
+  body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #eef2f3, #dfe7ef);
+    color: #2c3e50;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
   }
-}
 
-/* Header */
-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #2c3e50;
-  color: #fff;
-  padding: 20px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 10;
-}
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2c3e50;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+  }
 
-header h1 {
-  font-size: 1.5rem;
-  margin: 0;
-  color: #fff;
-}
+  header h1 {
+    font-size: 1.5rem;
+    margin: 0;
+    color: #fff;
+  }
 
-/* Footer */
-footer {
-  background-color: #2c3e50;
-  color: #fff;
-  text-align: center;
-  padding: 10px 0;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  font-size: 0.9rem;
-}
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #2c3e50;
+    color: #fff;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 0.9rem;
+    z-index: 10;
+  }
+
+  /* Contenedor principal */
+  .payments-container {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    max-width: 800px;
+    width: 100%;
+    margin: 80px auto 60px; /* Márgenes ajustados para header y footer */
+    text-align: center;
+  }
+
+  @media screen and (max-width: 768px) {
+    header, footer {
+      padding: 10px;
+      font-size: 0.9rem;
+    }
+
+    .payments-container {
+      margin: 70px auto 50px; /* Espacios más pequeños para pantallas reducidas */
+    }
+  }
+
+  /* Title */
+  h1 {
+    margin-bottom: 1.5rem;
+    color: #34495e;
+    font-size: 2rem;
+    border-bottom: 2px solid #3498db;
+    display: inline-block;
+    padding-bottom: 10px;
+  }
+
+  /* Filtros */
+  .filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    align-items: flex-end;
+  }
+
+  .input-group {
+    flex: 1;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #555;
+  }
+
+  input,
+  select {
+    width: 100%;
+    padding: 10px 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    background: #f9f9f9;
+    transition: border 0.3s, box-shadow 0.3s;
+  }
+
+  input:focus,
+  select:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+  }
+
+  button {
+    padding: 10px 15px;
+    background-color: #1abc9c;
+    color: #ffffff;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+  }
+
+  button:hover {
+    background-color: #16a085;
+    transform: translateY(-2px);
+  }
+
+  /* Table */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1.5rem;
+    background: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  table th,
+  table td {
+    padding: 15px;
+    text-align: left;
+    font-size: 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  table th {
+    background: #34495e;
+    color: #ffffff;
+  }
+
+  table tr:hover {
+    background: #eaf3fa;
+  }
+
+  table tr:last-child td {
+    border-bottom: none;
+  }
+
+  /* Mensaje de comprobantes */
+  #mensaje-comprobante {
+    color: #1abc9c;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 20px;
+  }
+
+  .hidden {
+    display: none;
+  }
