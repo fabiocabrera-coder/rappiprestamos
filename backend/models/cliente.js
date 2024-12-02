@@ -145,12 +145,17 @@ export const obtenerClientePorCorreo = async (correo) => {
     }
   };
   
+  
 
 // Modelo Cliente (función de creación base)
 export const Cliente = {
   create: registrarCliente,
-  obtenerClientePorCorreo: obtenerClientePorCorreo
+  obtenerClientePorCorreo: obtenerClientePorCorreo,
 };
+
+export const clienteDoc = {
+  obtenerClientePorDocumento: obtenerClientePorDocumento
+}
 
 // Modelo Persona Natural
 export const PersonaNatural = {
