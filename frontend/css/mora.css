@@ -1,46 +1,77 @@
 /* General */
-body {
-  font-family: 'Roboto', sans-serif;
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
   background: linear-gradient(135deg, #eef2f3, #dfe7ef);
   color: #2c3e50;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   min-height: 100vh;
-  overflow-x: hidden;
 }
 
+/* Header */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #2c3e50;
+  color: white;
+  padding: 1rem 2rem;
+  z-index: 1000;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #fff;
+}
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #2c3e50;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+  font-size: 0.9rem;
+  z-index: 1000;
+}
+
+footer p {
+  margin: 0;
+}
+
+/* Contenedor principal */
 .mora-container {
   padding: 2rem;
   text-align: center;
-  width: 100%;
   max-width: 900px;
+  width: 100%;
+  margin: 100px auto 60px; /* Márgenes ajustados para header y footer */
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-/* Header */
-header {
-  background: #2c3e50;
-  color: white;
-  padding: 1rem 2rem;
-  width: 100%;
-  text-align: left; /* Alineamos el texto a la izquierda */
-  position: absolute;
-  top: 0px; /* Ajustamos la distancia desde el borde superior */
-  left: 0px; /* Ajustamos la distancia desde el borde izquierdo */
-  z-index: 1000; /* Asegura que el encabezado no se quede atrás */
-}
+@media screen and (max-width: 768px) {
+  header, footer {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
 
-header h1 {
-  margin: 0;
-  font-size: 2rem;
-  color: #fff;
+  .mora-container {
+    margin: 90px auto 50px; /* Espacios más pequeños para pantallas reducidas */
+  }
 }
 
 /* Main Content */
@@ -50,7 +81,6 @@ h1 {
   font-size: 2rem;
   border-bottom: 2px solid #3498db;
   display: inline-block;
-  padding-bottom: 0px;
 }
 
 .loan-cards {
@@ -105,6 +135,7 @@ button:hover {
   transform: translateY(-2px);
 }
 
+/* Modal */
 .modal {
   position: fixed;
   top: 0;
@@ -120,6 +151,11 @@ button:hover {
   transition: opacity 0.3s ease, visibility 0.3s ease;
 }
 
+.modal.show {
+  opacity: 1;
+  visibility: visible;
+}
+
 .modal-content {
   background: #ffffff;
   padding: 2rem;
@@ -127,38 +163,6 @@ button:hover {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   width: 400px;
   text-align: left;
-}
-
-.modal.show {
-  opacity: 1;
-  visibility: visible;
-}
-
-.input-group {
-  margin-bottom: 1rem;
-}
-
-label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #555;
-}
-
-input {
-  width: calc(100% - 2rem);
-  padding: 10px 1rem;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 1rem;
-  background: #f9f9f9;
-  transition: border 0.3s, box-shadow 0.3s;
-}
-
-input:focus {
-  border-color: #3498db;
-  outline: none;
-  box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
 }
 
 #close-modal {
@@ -179,19 +183,4 @@ input:focus {
 
 .hidden {
   display: none;
-}
-
-/* Footer */
-footer {
-  background: #2c3e50;
-  color: white;
-  text-align: center;
-  padding: 1rem 0;
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-}
-
-footer p {
-  margin: 0;
 }
