@@ -1,4 +1,4 @@
-import client from '../config/database.js';  // Importación con la exportación nombrada
+import { client } from '../config/database.js';  // Importación con la exportación nombrada
 
 // Definimos las funciones para interactuar con la base de datos
 

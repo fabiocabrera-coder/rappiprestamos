@@ -14,4 +14,4 @@ client.connect()
   .then(() => console.log('Conectado a PostgreSQL'))
   .catch((err) => console.error('Error de conexión:', err.stack));
 
-export default client;  // Exportación con nombre
+export { client };  // Exportación con nombre
