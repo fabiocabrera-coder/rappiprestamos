@@ -1,145 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pantalla de Registro de Cliente</title>
-    <link href="/frontend/css/registerClient.css" rel="stylesheet" />
+    <title>Registro de Cliente</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <div class="container">
+        <h1>Registrar Cliente</h1>
+        <form id="formRegistroCliente">
+            <label for="correo">Correo electrónico:</label>
+            <input type="email" id="correo" name="correo" required>
 
-<header>
-    <h1>RappiPréstamos</h1>
-</header>
+            <label for="telefono">Teléfono:</label>
+            <input type="text" id="telefono" name="telefono" required>
 
-<main>
-    <div class="register-container">
-        <h1>Registro de Cliente</h1>
-        <form id="register-form">
-            <div class="input-group">
-                <label for="dni-ruc">DNI o RUC</label>
-                <input type="text" id="dni-ruc" placeholder="Ingresa DNI o RUC" maxlength="11" required>
-                <button type="button" id="fetch-data">Buscar</button>
-            </div>
+            <label for="tipoCliente">Tipo de Cliente:</label>
+            <select id="tipoCliente" name="tipoCliente" required>
+                <option value="personaNatural">Persona Natural</option>
+                <option value="personaJuridica">Persona Jurídica</option>
+            </select>
 
-            <div class="input-group">
-                <label for="nombre">Nombre Completo</label>
-                <input type="text" id="nombre" placeholder="Nombre completo" readonly>
-            </div>
+            <label for="documento">Documento (DNI o RUC):</label>
+            <input type="text" id="documento" name="documento" required>
 
-            <div class="input-group">
-                <label for="direccion">Dirección</label>
-                <input type="text" id="direccion" placeholder="Dirección" readonly>
-            </div>
-
-            <div class="input-group">
-                <label for="telefono">Teléfono</label>
-                <input type="text" id="telefono" placeholder="Teléfono">
-            </div>
-
-            <div class="input-group">
-                <label for="correo">Correo Electrónico</label>
-                <input type="email" id="correo" placeholder="Correo">
-            </div>
-
-            <div class="input-group">
-                <label for="fecha-nacimiento">Fecha de Nacimiento</label>
-                <input type="date" id="fecha-nacimiento" required>
-                <p id="edad-warning" class="warning">El cliente debe ser mayor de 18 años para solicitar un préstamo.</p>
-            </div>
-
-            <div class="input-group">
-                <label for="monto-prestamo">Monto del Préstamo</label>
-                <input type="number" id="monto-prestamo" max="5000" placeholder="Monto (Máx. 5000 soles)" disabled>
-            </div>
-
-            <div class="input-group">
-                <label for="plazo-prestamo">Plazo del Préstamo</label>
-                <select id="plazo-prestamo" disabled>
-                    <option value="1">1 mes</option>
-                    <option value="6">6 meses</option>
-                </select>
-            </div>
-
-            <button type="submit" id="register-btn">Registrar Cliente</button>
+            <button type="submit">Registrar</button>
         </form>
-
-        <p id="cronograma">Cronograma generado: <span id="detalle-cronograma"></span></p>
     </div>
-</main>
 
-<footer>
-    <p>RappiPréstamos © 2024 Todos los Derechos Reservados</p>
-</footer>
-
-<script>
-    document.getElementById('fetch-data').addEventListener('click', function() {
-        const dniRuc = document.getElementById('dni-ruc').value;
-        if (dniRuc.length === 8 || dniRuc.length === 11) {
-            // Simulación de datos recuperados (puedes usar una API real)
-            document.getElementById('nombre').value = 'Cliente Simulado';
-            document.getElementById('direccion').value = 'Calle Falsa 123';
-        } else {
-            alert('Ingresa un DNI (8 dígitos) o RUC (11 dígitos) válido.');
-        }
-    });
-
-    document.getElementById('fecha-nacimiento').addEventListener('change', function() {
-        const birthDate = new Date(this.value);
-        const today = new Date();
-        const is18orOlder = today >= new Date(birthDate.setFullYear(birthDate.getFullYear() + 18));
-
-        if (!is18orOlder) {
-            document.getElementById('edad-warning').classList.add('show');
-            document.getElementById('monto-prestamo').disabled = true;
-            document.getElementById('plazo-prestamo').disabled = true;
-        } else {
-            document.getElementById('edad-warning').classList.remove('show');
-            document.getElementById('monto-prestamo').disabled = false;
-            document.getElementById('plazo-prestamo').disabled = false;
-        }
-    });
-
-    document.getElementById('register-form').addEventListener('submit', async function(event) {
-        event.preventDefault();
-
-        const cliente = {
-            dniRuc: document.getElementById('dni-ruc').value,
-            nombre: document.getElementById('nombre').value,
-            direccion: document.getElementById('direccion').value,
-            telefono: document.getElementById('telefono').value,
-            correo: document.getElementById('correo').value,
-            fechaNacimiento: document.getElementById('fecha-nacimiento').value,
-        };
-
-        const prestamo = {
-            montoPrestamo: document.getElementById('monto-prestamo').value,
-            plazoPrestamo: document.getElementById('plazo-prestamo').value
-        };
-
-        try {
-            // Registrar cliente y préstamo en backend
-            const response = await fetch('https://tu-api-backend.com/clientes-prestamos', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ cliente, prestamo })
-            });
-
-            if (response.ok) {
-                alert('Cliente y préstamo registrados exitosamente.');
-                window.location.href = 'admin.html'; // Redirigir a la pantalla principal
-            } else {
-                alert('Error al registrar el cliente y préstamo.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error al conectar con el servidor.');
-        }
-    });
-</script>
-
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../scripts/formcliente.js"></script>
 </body>
 </html>

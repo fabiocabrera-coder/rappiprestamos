@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Préstamo</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Registrar Préstamo</h1>
+        <form id="formRegistrarPrestamo">
+            <label for="clienteId">ID Cliente:</label>
+            <input type="text" id="clienteId" name="clienteId" required>
+
+            <label for="monto">Monto del Préstamo:</label>
+            <input type="number" id="monto" name="monto" required>
+
+            <label for="plazo">Plazo (meses):</label>
+            <input type="number" id="plazo" name="plazo" required>
+
+            <label for="interes">Tasa de Interés:</label>
+            <input type="number" id="interes" name="interes" required>
+
+            <button type="submit">Registrar Préstamo</button>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../scripts/appprestamo.js"></script>
+</body>
+</html>

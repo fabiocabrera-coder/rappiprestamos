@@ -22,6 +22,8 @@
         <li><a href="#" data-section="prestamos">Préstamos</a></li>
         <li><a href="#" data-section="pagos">Pagos</a></li>
         <li><a href="#" data-section="informes">Informes</a></li>
+        <!-- Enlace a la página de Registrar Préstamo -->
+        <li><a href="/frontend/html/registrarPrestamo.html">Registrar Préstamo</a></li>
       </ul>
     </nav>
 
@@ -187,17 +189,17 @@
         alert(`Pago del préstamo ID: ${prestamoId}`);
     }
 
-    <!-- Script para cerrar sesión -->
+    // Script para cerrar sesión
     document.getElementById('logout-btn').addEventListener('click', () => {
-    // Eliminar datos de sesión (si usas localStorage, sessionStorage o cookies)
-    sessionStorage.clear(); // Elimina datos de sesión almacenados
-    localStorage.clear(); // Elimina datos almacenados localmente
+        // Eliminar datos de sesión (si usas localStorage, sessionStorage o cookies)
+        sessionStorage.clear(); // Elimina datos de sesión almacenados
+        localStorage.clear(); // Elimina datos almacenados localmente
 
-    // Redirigir a la página de inicio de sesión
-    window.location.href = '/frontend/html/login.html';
-  });
+        // Redirigir a la página de inicio de sesión
+        window.location.href = '../frontend/html/login.html';
+    });
 </script>
-
 
 </body>
 </html>
+
