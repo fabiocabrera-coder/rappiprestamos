@@ -39,9 +39,9 @@ export const generarCronogramaPagos = (montoTotal, plazo) => {
 };
   
 // Función para registrar el préstamo
-export const registrarPrestamo = async (documentoIdentidad, monto, plazo) => {
+export const registrarPrestamo = async (documento, monto, plazo) => {
     // Primero, obtener los datos del cliente por su DNI o RUC
-    const cliente = await clienteDoc(documentoIdentidad);
+    const cliente = await clienteDoc.obtenerClientePorDocumento(documento);
     if (!cliente) {
         throw new Error('Cliente no encontrado.');
     }

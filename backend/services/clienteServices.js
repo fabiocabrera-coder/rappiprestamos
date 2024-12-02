@@ -97,7 +97,7 @@ export const registrarClienteService = async ({ correo, telefono, tipoCliente, d
         departamento: rucData.departamento,
         esagenteretencion: rucData.EsAgenteRetencion,
         tipo: rucData.tipo,
-        actividadeconomica: rucData.actividadEconomica,
+        actividadeconomica: rucData.actividadconomica,
         numerotrabajadores: rucData.numeroTrabajadores,
         tipofacturacion: rucData.tipoFacturacion,
         tipocontabilidad: rucData.tipoContabilidad,
@@ -111,5 +111,7 @@ export const registrarClienteService = async ({ correo, telefono, tipoCliente, d
     throw new Error('Error al registrar el cliente: ' + error.message);
   }
 };
+
+
 
 
