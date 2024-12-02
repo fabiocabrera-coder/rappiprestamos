@@ -76,6 +76,7 @@
     document.getElementById('fetch-data').addEventListener('click', function() {
         const dniRuc = document.getElementById('dni-ruc').value;
         if (dniRuc.length === 8 || dniRuc.length === 11) {
+            // Simulación de datos recuperados (puedes usar una API real)
             document.getElementById('nombre').value = 'Cliente Simulado';
             document.getElementById('direccion').value = 'Calle Falsa 123';
         } else {
@@ -99,14 +100,46 @@
         }
     });
 
-    document.getElementById('register-form').addEventListener('submit', function(event) {
+    document.getElementById('register-form').addEventListener('submit', async function(event) {
         event.preventDefault();
-        alert('Cliente registrado exitosamente.');
-        const plazo = document.getElementById('plazo-prestamo').value;
-        document.getElementById('detalle-cronograma').innerText = `Pagos mensuales durante ${plazo} mes(es).`;
-        document.getElementById('cronograma').style.display = 'block';
+
+        const cliente = {
+            dniRuc: document.getElementById('dni-ruc').value,
+            nombre: document.getElementById('nombre').value,
+            direccion: document.getElementById('direccion').value,
+            telefono: document.getElementById('telefono').value,
+            correo: document.getElementById('correo').value,
+            fechaNacimiento: document.getElementById('fecha-nacimiento').value,
+        };
+
+        const prestamo = {
+            montoPrestamo: document.getElementById('monto-prestamo').value,
+            plazoPrestamo: document.getElementById('plazo-prestamo').value
+        };
+
+        try {
+            // Registrar cliente y préstamo en backend
+            const response = await fetch('https://tu-api-backend.com/clientes-prestamos', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cliente, prestamo })
+            });
+
+            if (response.ok) {
+                alert('Cliente y préstamo registrados exitosamente.');
+                window.location.href = 'admin.html'; // Redirigir a la pantalla principal
+            } else {
+                alert('Error al registrar el cliente y préstamo.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al conectar con el servidor.');
+        }
     });
 </script>
+
 
 </body>
 </html>

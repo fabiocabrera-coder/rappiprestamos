@@ -118,7 +118,7 @@ export const obtenerClientePorDocumento = async (documento) => {
     FROM cliente c
     LEFT JOIN personaNatural p ON c.id = p.cliente_id
     LEFT JOIN personaJuridica j ON c.id = j.cliente_id
-    WHERE c.documento = $1;
+    WHERE documento = $1;
   `;
   const values = [documento];
 

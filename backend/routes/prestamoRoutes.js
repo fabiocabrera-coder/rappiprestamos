@@ -4,8 +4,6 @@ import { registrarPrestamoController } from '../controllers/prestamoController.j
 const router = express.Router();
 
 // Ruta para registrar un préstamo
-router.post('/prestamos', registrarPrestamoController);
-
-router.get('/prestamos', registrarPrestamoController);
+router.post('/registrar', registrarPrestamoController);
 
 export default router;

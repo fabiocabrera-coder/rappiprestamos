@@ -11,6 +11,7 @@
 <!-- Header -->
 <header>
   <h1>RappiPréstamos</h1>
+  <button id="logout-btn" class="logout-btn">Cerrar Sesión</button>
 </header>
 
   <div class="admin-container">
@@ -29,6 +30,7 @@
 
       <!-- Vista de Clientes -->
       <section id="clientes" class="section active">
+        <button class="add-client-btn" href="/frontend/html/registerClient.html">Añadir Cliente</button>
         <table>
           <thead>
             <tr>
@@ -41,19 +43,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Juan Pérez</td>
-              <td>Activo</td>
-              <td>$10,000</td>
-              <td>2024-01-01</td>
-              <td>2024-06-01</td>
-              <td><button>Ver Detalles</button></td>
-            </tr>
+
           </tbody>
         </table>
       </section>
-
-      <!-- Vista de Préstamos -->
+     <!-- Vista de Préstamos -->
       <section id="prestamos" class="section">
         <table>
           <thead>
@@ -68,15 +62,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Ana Gómez</td>
-              <td>$5,000</td>
-              <td>6 meses</td>
-              <td>En Mora</td>
-              <td>2023-07-01</td>
-              <td>2023-12-31</td>
-              <td><button>Ver y Pagar</button></td>
-            </tr>
+
           </tbody>
         </table>
       </section>
@@ -94,13 +80,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Juan Pérez</td>
-              <td>2024-03-01</td>
-              <td>$1,000</td>
-              <td>Completo</td>
-              <td><button>Emitir Comprobante</button></td>
-            </tr>
+            
           </tbody>
         </table>
       </section>
@@ -119,22 +99,105 @@
   </footer>
 
   <script>
+    // Script para cambiar entre secciones del sidebar
     const links = document.querySelectorAll('.sidebar a');
     const sections = document.querySelectorAll('.section');
     const title = document.getElementById('section-title');
 
     links.forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const sectionId = link.dataset.section;
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const sectionId = link.dataset.section;
 
-        sections.forEach(section => section.classList.remove('active'));
-        document.getElementById(sectionId).classList.add('active');
+            // Cambiar la clase activa
+            sections.forEach(section => section.classList.remove('active'));
+            document.getElementById(sectionId).classList.add('active');
 
-        title.textContent = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
-      });
+            // Actualizar el título de la sección
+            title.textContent = sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+        });
     });
-  </script>
+
+    // Script para cargar datos desde el backend
+    async function fetchClientes() {
+        try {
+            const response = await fetch('https://tu-api-backend.com/clientes');
+            if (!response.ok) throw new Error('Error al cargar los clientes.');
+
+            const clientes = await response.json();
+            const tbody = document.querySelector('#clientes tbody');
+            tbody.innerHTML = '';
+
+            clientes.forEach(cliente => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${cliente.nombre}</td>
+                    <td>${cliente.estadoPrestamo}</td>
+                    <td>${cliente.montoPrestamo}</td>
+                    <td>${cliente.fechaInicio}</td>
+                    <td>${cliente.fechaVencimiento}</td>
+                    <td><button onclick="verDetalles(${cliente.id})">Ver Detalles</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            document.querySelector('#clientes tbody').innerHTML = '<tr><td colspan="6">No se pudieron cargar los clientes.</td></tr>';
+        }
+    }
+
+    async function fetchPrestamos() {
+        try {
+            const response = await fetch('https://tu-api-backend.com/prestamos');
+            if (!response.ok) throw new Error('Error al cargar los préstamos.');
+
+            const prestamos = await response.json();
+            const tbody = document.querySelector('#prestamos tbody');
+            tbody.innerHTML = '';
+
+            prestamos.forEach(prestamo => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${prestamo.cliente}</td>
+                    <td>${prestamo.monto}</td>
+                    <td>${prestamo.plazo} meses</td>
+                    <td>${prestamo.estado}</td>
+                    <td>${prestamo.fechaInicio}</td>
+                    <td>${prestamo.fechaVencimiento}</td>
+                    <td><button onclick="pagarPrestamo(${prestamo.id})">Ver y Pagar</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        } catch (error) {
+            console.error('Error:', error);
+            document.querySelector('#prestamos tbody').innerHTML = '<tr><td colspan="7">No se pudieron cargar los préstamos.</td></tr>';
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchClientes();
+        fetchPrestamos();
+    });
+
+    function verDetalles(clienteId) {
+        alert(`Detalles del cliente ID: ${clienteId}`);
+    }
+
+    function pagarPrestamo(prestamoId) {
+        alert(`Pago del préstamo ID: ${prestamoId}`);
+    }
+
+    <!-- Script para cerrar sesión -->
+    document.getElementById('logout-btn').addEventListener('click', () => {
+    // Eliminar datos de sesión (si usas localStorage, sessionStorage o cookies)
+    sessionStorage.clear(); // Elimina datos de sesión almacenados
+    localStorage.clear(); // Elimina datos almacenados localmente
+
+    // Redirigir a la página de inicio de sesión
+    window.location.href = '/frontend/html/login.html';
+  });
+</script>
+
 
 </body>
 </html>
